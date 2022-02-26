@@ -17,8 +17,6 @@ namespace FnsService
 
         public string NumberOfPassport { get; set; }
 
-        public string Inn { get; set; }
-
         public Person(string firstName, string patronymic, string lastName, DateTime dateOfBirth, string numberOfPassport)
         {
             if (string.IsNullOrWhiteSpace(firstName))
@@ -54,17 +52,19 @@ namespace FnsService
                 throw new ArgumentNullException(nameof(numberOfPassport), "Поле 'Номер паспорта' не может быть пустым или состоять только из пробелов");
             }
 
-            if (numberOfPassport.Length != 10)
+            string correctNumbOfPas = numberOfPassport.Replace(" ", "");
+
+            if (correctNumbOfPas.Length != 10)
             {
                 throw new ArgumentException("Значение 'Номер паспорта' должно состоять из 10 цифр", nameof(numberOfPassport));
             }
 
-            if (numberOfPassport.Any(c => !(Char.IsNumber(c))))
+            if (correctNumbOfPas.Any(c => !Char.IsDigit(c)))
             {
                 throw new ArgumentException("Значение 'Номер паспорта' должно состоять только из цифр", nameof(numberOfPassport));
             }
 
-            NumberOfPassport = numberOfPassport;
+            NumberOfPassport = correctNumbOfPas;
         }
     }
 }

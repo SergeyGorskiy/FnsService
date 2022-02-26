@@ -16,7 +16,7 @@ namespace FnsService
             string lastName = HttpUtility.UrlEncode(person.LastName);
             string dateOfBirth = person.DateOfBirth.ToString("dd.MM.yyyy");
             string i = person.NumberOfPassport;
-            string numberOfPassport = $"{i[0]}{i[1]}+{i[2]}{i[3]}+{i[4]}{i[5]}{i[6]}{i[7]}{i[8]}{i[9]}";
+            string numberOfPassport = $"{i.Substring(0, 2)}+{i.Substring(2, 2)}+{i.Substring(4,6)}";
 
             using (var client = new HttpClient())
             {
@@ -50,7 +50,6 @@ namespace FnsService
                     {
                         throw new Exception("Запрос № 2 потерпел неудачу");
                     }
-
                 }
                 else
                 {
